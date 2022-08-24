@@ -6,7 +6,7 @@
 #    By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/17 12:05:37 by cproesch          #+#    #+#              #
-#    Updated: 2022/08/22 17:14:35 by cproesch         ###   ########.fr        #
+#    Updated: 2022/08/24 10:40:04 by cproesch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ objs/ft_out/%.o:	%.cpp
 					$(CXX) -c $< $(CXXFLAGS) -o $@ $(IFLAGS)
 
 objs/std_out/%.o:	CXXFLAGS += -D LIB=std
+
 objs/std_out/%.o:	%.cpp
 					mkdir -p $(@D)
 					$(CXX) -c $< $(CXXFLAGS) -o $@ $(IFLAGS)
