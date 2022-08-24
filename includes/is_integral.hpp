@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 18:24:20 by cproesch          #+#    #+#             */
-/*   Updated: 2022/06/22 15:41:48 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/24 16:00:24 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ namespace ft
     
     template<class T, T v>
     struct integral_constant {
-    static const T value = v;
+        static const T value = v;
     };
     
     typedef integral_constant<bool, true> true_type;

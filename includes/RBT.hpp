@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 17:40:12 by cproesch          #+#    #+#             */
-/*   Updated: 2022/08/24 15:10:47 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/24 15:44:52 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <functional>
 # include <memory>
+# include <string>
 # include <algorithm>
 # include "RBT_iterator.hpp"
 # include "pairs.hpp"

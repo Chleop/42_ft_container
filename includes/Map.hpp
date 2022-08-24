@@ -6,17 +6,13 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 10:44:45 by cproesch          #+#    #+#             */
-/*   Updated: 2022/08/23 18:19:00 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/24 15:46:02 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
 # define MAP_HPP
 
-# include <functional>
-# include <memory>
-# include <string>
-# include "pairs.hpp"
 # include "RBT.hpp"
 
 namespace ft
@@ -80,11 +76,11 @@ private:
 /* ************************************************************************** */
 
 public:
-    // Default
+// Default
     explicit map(const Compare& comp = Compare(), const Allocator& a = Allocator()):
     _size(0), _RedBlackTree(value_compare(comp), a){}
 
-    // Range
+// Range
     template <class InputIterator>
     map (InputIterator first,
         InputIterator last,
@@ -94,12 +90,12 @@ public:
         insert(first, last);
     }
 
-    // Copy
+// Copy
     map (const map<Key,T,Compare,Allocator>& x):
     _size(0), _RedBlackTree(x._RedBlackTree)
     {}
 
-    // Destructor
+// Destructor
     ~map(void) {}
 
 
@@ -184,6 +180,7 @@ public:
         _RedBlackTree.clear();
     }
 
+
 /* ************************************************************************** */
 /*                                  OBSERVERS                                 */
 /* ************************************************************************** */
@@ -195,6 +192,7 @@ public:
     value_compare value_comp() const {
         return value_compare(key_compare());
     }
+
 
 /* ************************************************************************** */
 /*                               MAP OPERATIONS                               */

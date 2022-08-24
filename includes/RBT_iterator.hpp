@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 11:43:28 by cproesch          #+#    #+#             */
-/*   Updated: 2022/08/23 18:41:35 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/24 18:11:17 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ struct RBT_iterator
         if (_node->right != 0) {
             _node = _node->right;
             if (_node->parent != NULL && _node->parent->parent == NULL && 
-                _node->right->right == _node && _node->color == 1){
+                _node->data == value_type() && _node->color == 1){
                 return *this;
             }
             else {
@@ -83,7 +83,7 @@ struct RBT_iterator
     
     iterator& operator--() {
         if (_node->parent != NULL && _node->parent->parent == NULL && 
-                _node->right->right == _node && _node->color == 1)
+                _node->data == value_type() && _node->color == 1)
             _node = _node->right;
         else if (_node->left != 0) {
             node_ptr y = _node->left;
@@ -101,7 +101,7 @@ struct RBT_iterator
                 _node = _node->right;
                 while (true) {
                     if (_node->parent != NULL && _node->parent->parent == NULL && 
-                        _node->right->right == _node && _node->color == 1)
+                        _node->data == value_type() && _node->color == 1)
                         break;
                     _node = _node->right;
                 }
@@ -173,7 +173,7 @@ struct RBT_const_iterator
         if (_node->right != 0) {
             _node = _node->right;
             if (_node->parent != NULL && _node->parent->parent == NULL && 
-                _node->right->right == _node && _node->color == 1){
+                _node->data == value_type() && _node->color == 1){
                 return *this;
             }
             else {
@@ -201,7 +201,7 @@ struct RBT_const_iterator
     
     const_iterator& operator--() {
         if (_node->parent != NULL && _node->parent->parent == NULL && 
-                _node->right->right == _node && _node->color == 1)
+                _node->data == value_type() && _node->color == 1)
             _node = _node->right;
         else if (_node->left != 0) {
             const_node_ptr y = _node->left;
@@ -219,7 +219,7 @@ struct RBT_const_iterator
                 _node = _node->right;
                 while (true) {
                     if (_node->parent != NULL && _node->parent->parent == NULL && 
-                        _node->right->right == _node && _node->color == 1)
+                        _node->data == value_type() && _node->color == 1)
                         break;
                     _node = _node->right;
                 }

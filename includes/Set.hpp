@@ -6,17 +6,13 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 17:58:48 by cproesch          #+#    #+#             */
-/*   Updated: 2022/08/24 15:09:53 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/24 15:45:05 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SET_HPP
 # define SET_HPP
 
-# include <functional>
-# include <memory>
-# include <string>
-# include "pairs.hpp"
 # include "RBT.hpp"
 
 namespace ft
