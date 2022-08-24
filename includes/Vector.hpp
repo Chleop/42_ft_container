@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 12:04:31 by cproesch          #+#    #+#             */
-/*   Updated: 2022/08/23 15:26:11 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/24 12:06:28 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,22 @@ public:
 // Range
     template <class InputIterator>
     vector(typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last, const allocator_type& a = allocator_type()):
-        _alloc(a), 
-        _size(last - first)
+        _alloc(a),
+        _size(0)
     {
+        InputIterator   tmp;
+        tmp = first;
+        while (tmp != last) {
+            ++tmp;
+            ++_size;
+        }
         _capacity = _size;
         _array = _alloc.allocate(_size);
-        for(size_type i = 0; i < _size; i++)
-            _alloc.construct(&(_array[i]), *(first + i));
+        tmp = first;
+        for(size_type i = 0; i < _size; i++){
+            _alloc.construct(&(_array[i]), *tmp);
+            ++tmp;
+        }
     }
 // Copy
     vector(const vector<T,Allocator>& x):
@@ -259,8 +268,13 @@ public:
     void    insert(iterator position, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
     {
         size_type   pos = position - begin();
-        size_type   added_size = last - first;
+        size_type   added_size = 0;
+        InputIterator tmp = first;
 
+        while (tmp != last) {
+            ++added_size;
+            ++tmp;
+        }
         if (added_size == 0)
             return;
         if (_capacity < _size + added_size)

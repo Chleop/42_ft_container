@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 17:58:48 by cproesch          #+#    #+#             */
-/*   Updated: 2022/08/22 17:15:31 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/24 12:36:32 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ class set {
     typedef Allocator                           allocator_type;
     typedef typename Allocator::reference       reference;
     typedef typename Allocator::const_reference const_reference;
-    typedef typename ft::RedBlackTree<value_type, Compare, Allocator>::iterator iterator;
+    typedef typename ft::RedBlackTree<value_type, Compare, Allocator>::const_iterator iterator;
     typedef typename ft::RedBlackTree<value_type, Compare, Allocator>::const_iterator const_iterator;
     typedef std::size_t                         size_type;
     typedef std::ptrdiff_t                      difference_type;
@@ -183,17 +183,29 @@ public:
         return _RedBlackTree.find(x);
     }
 
+    const_iterator find(const key_type& x) const {
+        return _RedBlackTree.find(x);
+    }
+
     size_type count(const key_type& x) const {
         if ((_RedBlackTree.find(x)) == (_RedBlackTree.end()))
             return 0;
         return 1;
     }
-
+    
     iterator lower_bound(const key_type& x) {
         return _RedBlackTree.lower_bound(x);
     }
 
+    const_iterator lower_bound(const key_type& x) const {
+        return _RedBlackTree.lower_bound(x);
+    }
+    
     iterator upper_bound(const key_type& x) {
+        return _RedBlackTree.upper_bound(x);
+    }
+
+    const_iterator upper_bound(const key_type& x) const {
         return _RedBlackTree.upper_bound(x);
     }
 
@@ -201,6 +213,11 @@ public:
     equal_range(const key_type& x) {
         ft::pair<iterator,iterator> p = _RedBlackTree.equal_range(x);
         return p;
+    }
+
+    ft::pair<const_iterator,const_iterator>
+    equal_range(const key_type& x) const {
+        return _RedBlackTree.equal_range(x);
     }
 
 
