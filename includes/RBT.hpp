@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 17:40:12 by cproesch          #+#    #+#             */
-/*   Updated: 2022/08/23 17:21:21 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/24 15:10:47 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,7 +297,7 @@ public:
         return ft::make_pair(iterator(searchNode(x)), true);
     }
 
-    iterator insert(iterator position, const value_type& x) {
+    iterator insert(const_iterator position, const value_type& x) {
         position = begin();
         insert(x);
         return iterator(searchNode(x));
@@ -373,7 +373,7 @@ public:
         return;
     }
     
-    bool alreadyExistingKey(const value_type& x) {
+    bool alreadyExistingKey(const value_type& x) const {
         node_ptr node = searchNode(x);
         if (node) {
             // node->data = x;
@@ -530,7 +530,7 @@ public:
             nodeIsLeftChild = 1;
         // Case 5: Black mysibling with at least one red child + "outer nephew" is black
         // --> Recolor mysibling and its child, and rotate around mysibling
-        if (nodeIsLeftChild && (mysibling->right == NULL || mysibling->right->color == BLACK)) {
+        if (nodeIsLeftChild && (mysibling->right == NULL ||mysibling->right == _header || mysibling->right->color == BLACK)) {
             mysibling->left->color = BLACK;
             mysibling->color = RED;
             rotateRight(mysibling);
@@ -718,8 +718,8 @@ public:
     void    printNode(node_ptr node) const
     {
         std::cout << "Node address: " << node << std::endl;
-        std::cout << "Node data   : " << node->data.first << std::endl;
-        // std::cout << "Node data   : " << node->data << std::endl;
+        // std::cout << "Node data   : " << node->data.first << std::endl;
+        std::cout << "Node data   : " << node->data << std::endl;
         std::cout << "Node left   : " << node->left << std::endl;
         std::cout << "Node right  : " << node->right << std::endl;
         std::cout << "Node parent : " << node->parent << std::endl;
@@ -730,8 +730,8 @@ public:
     {
         node_ptr node = searchNode(x);
         std::cout << "Node address: " << node << std::endl;
-        std::cout << "Node data   : " << node->data.first << std::endl;
-        // std::cout << "Node data   : " << node->data << std::endl;
+        // std::cout << "Node data   : " << node->data.first << std::endl;
+        std::cout << "Node data   : " << node->data << std::endl;
         std::cout << "Node left   : " << node->left << std::endl;
         std::cout << "Node right  : " << node->right << std::endl;
         std::cout << "Node parent : " << node->parent << std::endl;
@@ -756,8 +756,8 @@ public:
                     indent += "|    ";
                 }
             }
-            std::cout << node->data.first << "(" << (node->color ? "RED" : "BLACK") << ")" << std::endl;
-            // std::cout << node->data << "(" << (node->color ? "RED" : "BLACK") << ")" << std::endl;
+            // std::cout << node->data.first << "(" << (node->color ? "RED" : "BLACK") << ")" << std::endl;
+            std::cout << node->data << "(" << (node->color ? "RED" : "BLACK") << ")" << std::endl;
             visualize(node->left, indent, false);
             visualize(node->right, indent, true);
         }
