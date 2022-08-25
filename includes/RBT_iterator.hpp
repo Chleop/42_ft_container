@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 11:43:28 by cproesch          #+#    #+#             */
-/*   Updated: 2022/08/24 18:11:17 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:11:10 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include "RBT_node.hpp"
 # include "iterator_traits.hpp"
 
+# define BLACK  0
+# define RED    1
+# define ROSE   2
 
 namespace ft
 {
@@ -54,10 +57,8 @@ struct RBT_iterator
     iterator& operator++() {
         if (_node->right != 0) {
             _node = _node->right;
-            if (_node->parent != NULL && _node->parent->parent == NULL && 
-                _node->data == value_type() && _node->color == 1){
+            if (_node->color == ROSE)
                 return *this;
-            }
             else {
                 while (_node->left != 0)
                     _node = _node->left;
@@ -82,8 +83,7 @@ struct RBT_iterator
     }
     
     iterator& operator--() {
-        if (_node->parent != NULL && _node->parent->parent == NULL && 
-                _node->data == value_type() && _node->color == 1)
+        if (_node->color == ROSE)
             _node = _node->right;
         else if (_node->left != 0) {
             node_ptr y = _node->left;
@@ -100,8 +100,7 @@ struct RBT_iterator
             if (!y) {
                 _node = _node->right;
                 while (true) {
-                    if (_node->parent != NULL && _node->parent->parent == NULL && 
-                        _node->data == value_type() && _node->color == 1)
+                    if (_node->color == ROSE)
                         break;
                     _node = _node->right;
                 }
@@ -172,10 +171,8 @@ struct RBT_const_iterator
     const_iterator& operator++() {
         if (_node->right != 0) {
             _node = _node->right;
-            if (_node->parent != NULL && _node->parent->parent == NULL && 
-                _node->data == value_type() && _node->color == 1){
+            if (_node->color == ROSE)
                 return *this;
-            }
             else {
                 while (_node->left != 0)
                     _node = _node->left;
@@ -200,8 +197,7 @@ struct RBT_const_iterator
     }
     
     const_iterator& operator--() {
-        if (_node->parent != NULL && _node->parent->parent == NULL && 
-                _node->data == value_type() && _node->color == 1)
+        if (_node->color == ROSE)
             _node = _node->right;
         else if (_node->left != 0) {
             const_node_ptr y = _node->left;
@@ -218,8 +214,7 @@ struct RBT_const_iterator
             if (!y) {
                 _node = _node->right;
                 while (true) {
-                    if (_node->parent != NULL && _node->parent->parent == NULL && 
-                        _node->data == value_type() && _node->color == 1)
+                    if (_node->color == ROSE)
                         break;
                     _node = _node->right;
                 }

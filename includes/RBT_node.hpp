@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 13:12:50 by cproesch          #+#    #+#             */
-/*   Updated: 2022/08/22 15:01:05 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:01:53 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ public:
     node_ptr    left;
     node_ptr    right;
     node_ptr    parent;
-    bool        color;
+    int         color;
 
 // CONSTRUCTORS / DESTRUCTORS
     Node(void)  : data(value_type()) {

@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 17:40:12 by cproesch          #+#    #+#             */
-/*   Updated: 2022/08/24 15:44:52 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:11:59 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # define BLACK  0
 # define RED    1
+# define ROSE   2
 
 namespace ft
 {
@@ -83,10 +84,10 @@ public:
         _root = _nil;
         _header = createNode(value_type());
         _header->parent = _root;
-        _header->color = RED;
+        _header->color = ROSE;
         _header->left = _header;
         _header->right = _header;
-        _root->right = _header;
+        _root->right = _header;;
     }
 
     RedBlackTree(const RedBlackTree<value_type, comp_type, Allocator> & x) :
@@ -96,7 +97,7 @@ public:
         _root = _nil;
         _header = createNode(value_type());
         _header->parent = _root;
-        _header->color = RED;
+        _header->color = ROSE;
         _header->left = _header;
         _header->right = _header;
         _root->right = _header;
@@ -128,7 +129,7 @@ public:
         _size = 0;
         _root = _nil;
         _header->parent = _root;
-        _header->color = RED;
+        _header->color = ROSE;
         _header->left = _header;
         _header->right = _header;
         _root->right = _header;
@@ -237,6 +238,12 @@ public:
         return true;
     }
 
+    bool    is_null(node_ptr node) {
+        if (node == NULL || node == _header)
+            return 1;
+        return 0;
+    }
+
 
 /* ************************************************************************** */
 /*                                  ROTATIONS                                 */
@@ -252,13 +259,13 @@ public:
             rightChild->left->parent = n;
         rightChild->left = n;
         n->parent = rightChild;
-        if (parent == NULL)
+        if (is_null(parent))
             _root = rightChild;
         else if (parent->right == n)
             parent->right = rightChild;
         else if (parent->left == n)
             parent->left = rightChild;
-        if (rightChild != NULL)
+        if (!is_null(rightChild))
             rightChild->parent = parent;
     }
 
@@ -272,13 +279,13 @@ public:
             leftChild->right->parent = n;
         leftChild->right = n;
         n->parent = leftChild;
-        if (parent == NULL)
+        if (is_null(parent))
             _root = leftChild;
         else if (parent->left == n)
             parent->left = leftChild;
         else if (parent->right == n)
             parent->right = leftChild;
-        if (leftChild != NULL)
+        if (!is_null(leftChild))
             leftChild->parent = parent;
     }
 
@@ -319,7 +326,7 @@ public:
 
     void insertNode(node_ptr newNode, node_ptr newParent) {
         newNode->parent = newParent;
-        if (newParent == NULL) {
+        if (is_null(newParent)) {
             _root = newNode;
             newNode->right = _header;
         }
@@ -343,11 +350,11 @@ public:
         node_ptr mygrandparent = grandparent(n);
         node_ptr myaunt = aunt(n);
 
-        if ((myparent == NULL) || (myparent->color == BLACK))
+        if ((is_null(myparent)) || (myparent->color == BLACK))
             return;
-        if (mygrandparent == NULL)
+        if (is_null(mygrandparent))
             myparent->color = BLACK;
-        else if (myaunt != NULL && myaunt != _header && myaunt->color == RED) {
+        else if (!is_null(myaunt) && myaunt->color == RED) {
             myaunt->color = BLACK;
             myparent->color = BLACK;
             mygrandparent->color = RED;
@@ -376,10 +383,8 @@ public:
     
     bool alreadyExistingKey(const value_type& x) const {
         node_ptr node = searchNode(x);
-        if (node) {
-            // node->data = x;
+        if (node)
             return true;
-        }
         return false;
     }
 
@@ -387,7 +392,7 @@ public:
         node_ptr    currentNode = _root;
         node_ptr    newParent   = NULL;
 
-        while(currentNode != NULL && currentNode != _nil && currentNode != _header) {
+        while(!is_null(currentNode) && currentNode != _nil) {
             newParent = currentNode;
             if (_comp(newNode->data, currentNode->data))
                 currentNode = currentNode->left;
@@ -427,7 +432,7 @@ public:
                 successor = findMinimum(node);
             else
                 successor = findMinimum(node->right);
-            if (node->parent == NULL)
+            if (is_null(node->parent))
                 _root = successor;
             (*node).swapNode(successor);
             deletedNodeColor = node->color;
@@ -455,7 +460,7 @@ public:
             res = node->left;
             replaceParentsChild(node->parent, node, node->left);
         }
-        else if (node->right != NULL && node->right != _header && node->right != _nil) {
+        else if (!is_null(node->right) && node->right != _nil) {
             res = node->right;
             replaceParentsChild(node->parent, node, node->right);
         }
@@ -478,14 +483,13 @@ public:
 
         node_ptr mysibling = sibling(node);
         // Case 2: Red sibling
-        if (mysibling && mysibling->color == RED) {
+        if (mysibling && (mysibling->color == RED)) {
             handleRedSibling(node, mysibling);
             mysibling = sibling(node); // Get new sibling for fall-through to cases 3-6
         }
         // Cases 3+4: Black sibling with two black children
         if (mysibling && (mysibling->left == NULL || mysibling->left->color == BLACK) 
-            && (mysibling->right == NULL || mysibling->right == _header 
-            || mysibling->right->color == BLACK)) {
+            && (is_null(mysibling->right) || mysibling->right->color == BLACK)) {
             mysibling->color = RED;
         // Case 3: Black sibling with two black children + red parent
             if (node->parent->color == RED)
@@ -510,7 +514,7 @@ public:
             parent->left = newChild;
         else if (parent->right == oldChild)
             parent->right = newChild;
-        if (newChild != NULL)
+        if (!is_null(newChild))
             newChild->parent = parent;
         deleteNode(&oldChild);
     }
@@ -531,7 +535,7 @@ public:
             nodeIsLeftChild = 1;
         // Case 5: Black mysibling with at least one red child + "outer nephew" is black
         // --> Recolor mysibling and its child, and rotate around mysibling
-        if (nodeIsLeftChild && (mysibling->right == NULL ||mysibling->right == _header || mysibling->right->color == BLACK)) {
+        if (nodeIsLeftChild && (is_null(mysibling->right) || mysibling->right->color == BLACK)) {
             mysibling->left->color = BLACK;
             mysibling->color = RED;
             rotateRight(mysibling);
@@ -573,11 +577,11 @@ public:
     void deleteFrom(node_ptr *node) {
         if (!(*node))
             return;
-        if ((*node)->right != NULL && (*node)->right != _header)
+        if (!is_null((*node)->right))
             deleteFrom(&(*node)->right);
         if ((*node)->left != NULL)
             deleteFrom(&(*node)->left);
-        if (((*node)->right == NULL || (*node)->right == _header) && (*node)->left == NULL) {
+        if (is_null((*node)->right) && (*node)->left == NULL) {
             if ((*node) == _root) {
                 if (_nil != _root)
                     deleteNode(&_root);
@@ -719,8 +723,8 @@ public:
     void    printNode(node_ptr node) const
     {
         std::cout << "Node address: " << node << std::endl;
-        // std::cout << "Node data   : " << node->data.first << std::endl;
-        std::cout << "Node data   : " << node->data << std::endl;
+        std::cout << "Node data   : " << node->data.first << std::endl;
+        // std::cout << "Node data   : " << node->data << std::endl;
         std::cout << "Node left   : " << node->left << std::endl;
         std::cout << "Node right  : " << node->right << std::endl;
         std::cout << "Node parent : " << node->parent << std::endl;
@@ -731,8 +735,8 @@ public:
     {
         node_ptr node = searchNode(x);
         std::cout << "Node address: " << node << std::endl;
-        // std::cout << "Node data   : " << node->data.first << std::endl;
-        std::cout << "Node data   : " << node->data << std::endl;
+        std::cout << "Node data   : " << node->data.first << std::endl;
+        // std::cout << "Node data   : " << node->data << std::endl;
         std::cout << "Node left   : " << node->left << std::endl;
         std::cout << "Node right  : " << node->right << std::endl;
         std::cout << "Node parent : " << node->parent << std::endl;
@@ -741,7 +745,7 @@ public:
 
     void visualize(node_ptr node, std::string indent, bool right) const
     {
-        if (node != NULL && (node != _header)) {
+        if (!is_null(node)) {
             printNode(node);
             std::cout << indent;
             if (right)
@@ -757,8 +761,8 @@ public:
                     indent += "|    ";
                 }
             }
-            // std::cout << node->data.first << "(" << (node->color ? "RED" : "BLACK") << ")" << std::endl;
-            std::cout << node->data << "(" << (node->color ? "RED" : "BLACK") << ")" << std::endl;
+            std::cout << node->data.first << "(" << (node->color ? "RED" : "BLACK") << ")" << std::endl;
+            // std::cout << node->data << "(" << (node->color ? "RED" : "BLACK") << ")" << std::endl;
             visualize(node->left, indent, false);
             visualize(node->right, indent, true);
         }
