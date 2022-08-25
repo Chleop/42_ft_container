@@ -6,24 +6,26 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:42:14 by cproesch          #+#    #+#             */
-/*   Updated: 2022/08/25 15:26:08 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/25 16:54:51 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.hpp"
+# include <sys/time.h>
 
 int main (void)
 {
+    struct timeval begin, end;
+	gettimeofday(&begin, 0);
+
     try
     {
         test_pairs();
         test_equal();
-        // won't test is_integral because the std is c++11, will test within the containers
-        // won't test enable_if because the std is c++11, will test within the containers
         test_lex_comp();
-        test_stack();
         test_reverse_iterators();
         test_vectors();
+        test_stack();
         test_map();
         test_set();
     }
@@ -32,5 +34,12 @@ int main (void)
 	    std::cerr << "Length error: " << le.what() << std::endl;
     }
 
+    gettimeofday(&end, 0);
+	long seconds = end.tv_sec - begin.tv_sec;
+	long microseconds = end.tv_usec - begin.tv_usec;
+	double elapsed = seconds + microseconds*1e-6;
+
+    std::cout << "Time elapsed : " << elapsed << std::endl;
+    
     return 0;
 }

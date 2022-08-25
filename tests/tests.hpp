@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:11:23 by cproesch          #+#    #+#             */
-/*   Updated: 2022/08/22 17:15:13 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/25 16:00:34 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@
 # include <map>
 # include <string>
 # include <vector>
-# include "../includes/pairs.hpp"
-# include "../includes/equal.hpp"
-# include "../includes/enable_if.hpp"
-# include "../includes/is_integral.hpp"
-# include "../includes/lex_compare.hpp"
-# include "../includes/Stack.hpp"
-# include "../includes/reverse_iterator.hpp"
-# include "../includes/Vector.hpp"
-# include "../includes/Map.hpp"
-# include "../includes/Set.hpp"
+# include "../includes/utils/pairs.hpp"
+# include "../includes/utils/equal.hpp"
+# include "../includes/utils/enable_if.hpp"
+# include "../includes/utils/is_integral.hpp"
+# include "../includes/utils/lex_compare.hpp"
+# include "../includes/utils/reverse_iterator.hpp"
+# include "../includes/Containers/Stack.hpp"
+# include "../includes/Containers/Vector.hpp"
+# include "../includes/Containers/Map.hpp"
+# include "../includes/Containers/Set.hpp"
 
 void test_pairs(void);
 void test_equal(void);

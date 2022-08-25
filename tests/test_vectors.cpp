@@ -73,6 +73,8 @@ void test_vectors(void)
     VECTOR<int> seven (2, 666);                         
     seven = fifth;                                      // assignment from bigger vector
 
+    
+
     empty_test(first, "first");
     single_test(second, "second");
     single_test(third, "third");
@@ -154,5 +156,12 @@ void test_vectors(void)
     std::cout << "egal      : " << (fifth == second) << std::endl;
     std::cout << "different : " << (fifth != second) << std::endl;
     std::cout << std::endl;
+
+    // VECTOR<int> testperf;
+    // int i = 0;
+    // while(i <1000000){
+    //     testperf.push_back(i);
+    //     i++;}
+
     return;
 }

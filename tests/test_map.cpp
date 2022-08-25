@@ -75,5 +75,12 @@ void test_map()
     map1.clear();
     std::cout << std::boolalpha << "9) Map is empty: " << map1.empty() << '\n';
 
+
+    // MAP<int, int> testperf;
+    // int i = 0;
+    // while(i <1000000){
+    //     testperf[i] = i;
+    //     i++;}
+
     return;
 }

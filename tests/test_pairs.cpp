@@ -6,7 +6,7 @@
 /*   By: cproesch <cproesch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 10:44:14 by cproesch          #+#    #+#             */
-/*   Updated: 2022/07/13 14:11:22 by cproesch         ###   ########.fr       */
+/*   Updated: 2022/08/25 16:52:28 by cproesch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void test_pairs(void)
 // TEST 1
     PAIR <int, char> p1;
     std::cout << p1.first << std::endl;
-    std::cout << p1.second << std::endl;
+    if (p1.second)
+        std::cout << p1.second << std::endl;
 // TEST 2  
     PAIR <int, char> mypair;
     mypair.first = 100;
